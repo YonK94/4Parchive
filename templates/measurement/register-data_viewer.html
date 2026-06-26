@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="main-content">
+
+    <div class="content-header">측정 데이터 등록</div>
+
+    <div class="content-body">
+        <div class="step-header">
+            <h3 class="step-title">검토</h3>
+            <div class="step-indicator">
+                <span class="step-icon-checked"><i class="material-icons">done</i></span>
+                <span class="step-line"></span>
+                <span class="step-icon-checked"><i class="material-icons">done</i></span>
+                <span class="step-line"></span>
+                <span class="step-dot"></span>
+            </div>
+        </div>
+        
+        <p class="step-desc">
+            취합된 데이터를 검토 후 저장할 데이터를 선택해주세요.<br>
+            선택한 데이터를 DB에 등록합니다.
+        </p>
+
+        <div class="info-grid">
+            <div class="info-item"><span>규격</span><b>{{ data.info.part_name }}</b></div>
+            <div class="info-item"><span>LOT 번호</span><b>{{ data.info.lot_num }}</b></div>
+            <div class="info-item"><span>공정</span><b>{{ data.info.process }}</b></div>
+            <div class="info-item"><span>측정 수량</span><b>{{ data.parts|length }} EA</b></div>
+        </div>
+
+        <form id="saveForm" action="{{ url_for('meas.save_measurement_data') }}" method="POST">
+
+            <table class="table-data_viewer">
+                <thead>
+                    <tr>
+                        <th><input type="checkbox" id="selectAll"></th>
+                        <th>측정일시</th>
+                        <th>장비</th>
+                        {%- for name in data.info.dim_basic_name -%}
+                        <th>
+                            {{- name -}}<br>
+                            <!-- <span>
+                                {{- "%.10g" | format(data.info.dim_basic_float[loop.index0]) -}}<br>
+                                [{{- "%+.10g" | format(data.info.tol_lower[loop.index0]) -}}/{{- "%+.10g" | format(data.info.tol_upper[loop.index0]) -}}]
+                            </span> -->
+                            <span>
+                                {{- "%.10g"|format(data.info.dim_basic_float[loop.index0]) -}}<br>
+                                {%- set lower = data.info.tol_lower[loop.index0] | float -%}
+                                {%- set upper = data.info.tol_upper[loop.index0] | float -%}
+                                {%- if upper|abs == lower|abs and upper != 0 -%}
+                                    [±{{- "%.10g"|format(upper|abs) -}}]
+                                    {%- else -%}
+                                    [{{- "%+.10g"|format(lower) }}/{{ "%+.10g"|format(upper) -}}]
+                                {%- endif -%}
+                            </span>
+                        </th>
+                        {%- endfor -%}
+                    </tr>
+                </thead>
+                <tbody>
+                    {%- for part in data.parts -%}
+                    <tr>
+                        <td><input type="checkbox" name="selected_ids" value="{{ part.serial_num }}"></td>
+                        <td style="font-size: 0.8rem;">{{- part.measured_time[2:16].replace('-', '.') -}}</td>
+                        <td>{{- part.worked_cnc[2:] -}}</td>
+                        {%- for val in part.dims -%}
+                        <td class="{{ 'badge-ng' if part.is_pass[loop.index0] == false else '' }}">
+                            {{- "%.3f"|format(val) if val is not none else '-' -}}
+                        </td>
+                        {%- endfor -%}
+                    </tr>
+                    {%- endfor -%}
+                </tbody>
+            </table>
+
+            <div class="btn-container">
+                <button type="submit" class="btn-full btn-360">선택 항목 등록</button>
+            </div>
+            
+        </form>
+</div>
+
+{% endblock %}
+
+{% block extra_script %}
+<script src="{{ url_for('static', filename='js/register-data_viewer.js') }}"></script>
+{% endblock %}

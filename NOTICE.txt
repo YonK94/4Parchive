@@ -1,0 +1,44 @@
+Open Source Software Notice
+
+This application uses the following open-source software libraries.
+We acknowledge and are grateful to the developers of these projects.
+
+
+============================================================
+============================================================
+
+
+1. Flask
+License: BSD-3-Clause
+Copyright: Copyright 2010 Pallets
+URL: https://github.com/pallets/flask/blob/main/LICENSE.rst
+
+
+2. openpyxl
+License: MIT License
+Copyright: Copyright (c) 2010 openpyxl
+URL: https://github.com/ericgazoni/openpyxl/blob/master/LICENCE.rst
+
+
+3. pandas
+License: BSD-3-Clause
+Copyright: Copyright (c) 2008-2011, AQR Capital Management, LLC, Lambda Foundry, Inc. and PyData Development Team.
+URL: https://github.com/pandas-dev/pandas/blob/main/LICENSE
+
+
+4. pydantic
+License: MIT License
+Copyright: Copyright (c) 2017 Samuel Colvin
+URL: https://github.com/pydantic/pydantic/blob/main/LICENSE
+
+
+5. PyMySQL
+License: MIT License
+Copyright: Copyright (c) 2010, 2013 PyMySQL contributors
+URL: https://github.com/PyMySQL/PyMySQL/blob/main/LICENSE
+
+
+6. SQLAlchemy
+License: MIT License
+Copyright: Copyright (c) 2005-2024 SQLAlchemy authors and contributors.
+URL: https://github.com/sqlalchemy/sqlalchemy/blob/main/LICENSE

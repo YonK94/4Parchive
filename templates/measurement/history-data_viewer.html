@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block extra_head %}
+<link href="https://unpkg.com/tabulator-tables@5.5.0/dist/css/tabulator_semanticui.min.css" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+
+<div class="main-content">
+
+    <div class="content-header">측정 데이터 조회</div>
+
+    <div class="content-body">
+
+        <div class="info-grid" style="grid-template-columns: repeat(3, 1fr);">
+            <div class="info-item"><span>규격</span><b>{{ info.part_name }}</b></div>
+            <div class="info-item"><span>LOT 번호</span><b>{{ info.lot_no }}</b></div>
+            <div class="info-item"><span>공정</span><b>{{ info.process }}</b></div>
+        </div>
+    
+        <div id="data-table"></div>
+
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_script %}
+<script src="https://unpkg.com/tabulator-tables@5.5.0/dist/js/tabulator.min.js"></script>
+<script src="{{ url_for('static', filename='js/history-data_viewer.js') }}"></script>
+<script>
+    const tData = {{ table_data | safe }};
+    const hData = {{ header_data | safe }};
+    const sData = {{ specs | safe }};
+
+    document.addEventListener('DOMContentLoaded', function() {
+        initMeasurementTable(tData, hData, sData);
+    });
+</script>
+{% endblock %}

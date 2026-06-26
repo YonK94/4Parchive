@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="main-content">
+
+    <div class="content-header">측정 데이터 등록</div>
+
+    <div class="content-body">
+        <div class="step-header">
+            <h3 class="step-title">취합</h3>
+            <div class="step-indicator">
+                <span class="step-icon-checked"><i class="material-icons">done</i></span>
+                <span class="step-line"></span>
+                <span class="step-dot"></span>
+                <span class="step-line"></span>
+                <span class="step-dot"></span>
+            </div>
+        </div>
+
+        <p class="step-desc">
+            규격과 LOT 번호를 입력 후 공정을 선택해주세요.<br>
+            원본 파일을 검색하여 데이터를 취합합니다.
+        </p>
+
+        <form id="searchForm" action="{{ url_for('meas.extract_data') }}" method="POST">
+            
+            <div class="form-container">
+                <input type="text" id="part-name" name="part_name" placeholder="규격 입력 (3글자 이상)" list="part-list" required>
+                <datalist id="part-list"></datalist>
+
+                <input type="text" id="lot-no" name="lot_no" placeholder="LOT 번호 입력" required>
+                
+                <select id="process-name" name="process" required>
+                    <option value="" disabled selected>공정 선택</option>
+                </select>
+                
+                <div class="btn-container">
+                    <button type="submit" class="btn-full">취합</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="loading-overlay" style="display: none;">
+    <div class="loader-container">
+        <div class="spinner"></div>
+        <!-- <img src="{{ url_for('static', filename='img/loading_aris.webp') }}"> -->
+        <p>Now Loading...</p>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_script %}
+<script src="{{ url_for('static', filename='js/register-search.js') }}"></script>
+{% endblock %}

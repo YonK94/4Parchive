@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="main-content">
+
+    <div class="content-header">측정 데이터 조회</div>
+
+    <div class="content-body">
+        <form id="searchForm" action="{{ url_for('meas.show_history_data') }}" method="GET">
+            
+            <div class="form-container">
+                <div class="input-group" style="padding-top: 80px">
+                    <input type="text" id="lot-no" name="lot_no" placeholder="LOT 번호 입력 후 Enter" required>
+                </div>
+
+                <div id="process-section" style="display: none;">
+                    <select id="process-name" name="process" required>
+                        <option value="" disabled selected>공정을 선택하세요</option>
+                    </select>
+                
+                <div class="btn-container">
+                    <button type="submit" class="btn-full">조회</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_script %}
+<script src="{{ url_for('static', filename='js/history-search.js') }}"></script>
+{% endblock %}
